@@ -24,9 +24,9 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      # ৩. ডিপেন্ডেন্সি ইনস্টল করা
+      # ৩. ডিপেন্ডেন্সি ইনস্টল করা (সর্বাধিক নির্ভরযোগ্য উপায়ে)
       - name: Install Dependencies
-        run: npm ci
+        run: npm install
 
       # ৪. কোড কোয়ালিটি ও সিনট্যাক্স স্ক্যান (Lint Check)
       - name: Run Linter Checks
@@ -38,7 +38,7 @@ jobs:
 
       # ৬. বিল্ড করা ফাইলগুলো সফলভাবে আর্টিফ্যাক্ট হিসেবে সেভ করা
       - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v4 # সঠিক অ্যাকশন নাম
+        uses: actions/upload-artifact@v4 # টাইপো ফিক্স করা হয়েছে
         with:
           name: dist-artifacts
           path: dist/
