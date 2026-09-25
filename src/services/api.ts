@@ -1,6 +1,6 @@
 import { MessageItem, PlanStep, ToolExecutionRecord, ApprovalRequest, UserProfile } from '../types';
 import { getPageTranslations } from '../data/translations';
-import { getSavedGoogleAccessToken } from './googleOAuthFlow';
+import { GoogleAuthService } from './GoogleAuthService';
 
 export interface ChatResponse {
   content: string;
@@ -24,7 +24,7 @@ export async function sendAgentMessage(
   settings?: any
 ): Promise<ChatResponse> {
   try {
-    const googleToken = getSavedGoogleAccessToken();
+    const googleToken = GoogleAuthService.getAccessToken();
     const res = await fetch('/api/agent/chat', {
       method: 'POST',
       headers: {

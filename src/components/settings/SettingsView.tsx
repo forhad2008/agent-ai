@@ -23,12 +23,7 @@ import {
 } from 'lucide-react';
 import { useAgent } from '../../context/AgentContext';
 import { TECH_LANGUAGES, getLanguage } from '../../data/languages';
-import {
-  loginWithGoogleOAuth,
-  logoutGoogleOAuth,
-  getSavedGoogleAccessToken,
-  getSavedGoogleUser,
-} from '../../services/googleOAuthFlow';
+import { GoogleAuthService } from '../../services/GoogleAuthService';
 
 export const SettingsView: React.FC = () => {
   const {
@@ -54,8 +49,8 @@ export const SettingsView: React.FC = () => {
   useEffect(() => {
     // Check if user is already logged in on mount
     const loadGoogleStatus = () => {
-      const token = getSavedGoogleAccessToken();
-      const user = getSavedGoogleUser();
+      const token = GoogleAuthService.getAccessToken();
+      const user = GoogleAuthService.getUser();
       if (token && user) {
         setGoogleToken(token);
         setGoogleUser(user);
@@ -67,7 +62,7 @@ export const SettingsView: React.FC = () => {
   const handleGoogleConnect = async () => {
     setIsLoggingIn(true);
     try {
-      const result = await loginWithGoogleOAuth();
+      const result = await GoogleAuthService.login();
       if (result) {
         setGoogleUser(result.user);
         setGoogleToken(result.accessToken);
@@ -81,7 +76,7 @@ export const SettingsView: React.FC = () => {
 
   const handleGoogleDisconnect = () => {
     try {
-      logoutGoogleOAuth();
+      GoogleAuthService.logout();
       setGoogleUser(null);
       setGoogleToken(null);
     } catch (err) {
