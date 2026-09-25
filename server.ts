@@ -609,13 +609,28 @@ app.post("/api/agent/chat", async (req, res) => {
       parts: [{ text: promptWithDirectives }],
     });
 
+    const pLower = prompt.toLowerCase();
+    const needsSearch = pLower.includes("search") || pLower.includes("web") || pLower.includes("online") || pLower.includes("internet") || pLower.includes("google") || pLower.includes("সার্চ") || pLower.includes("খুঁজো") || pLower.includes("খুঁজুন") || pLower.includes("ওয়েব") || pLower.includes("তথ্যাদি") || pLower.includes("প্ল্যান") || pLower.includes("পরিকল্পনা");
+
+    const config: any = {
+      systemInstruction: getSystemInstruction(language, userProfile),
+      temperature: 0.4,
+    };
+
+    if (needsSearch) {
+      config.tools = [{ googleSearch: {} }];
+      executedGoogleTools.push({
+        toolName: "Google Live Search Grounding",
+        category: "WEB_TOOLS",
+        status: "success",
+        description: `Triggered live Google Search to ground the response with active, real-time web insights.`
+      });
+    }
+
     const response = await ai.models.generateContent({
       model: "gemini-3.8-flash",
       contents: contents,
-      config: {
-        systemInstruction: getSystemInstruction(language, userProfile),
-        temperature: 0.4,
-      },
+      config: config,
     });
 
     let rawText = response.text || "";
