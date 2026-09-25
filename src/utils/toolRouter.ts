@@ -51,10 +51,20 @@ export function classifyUserInput(prompt: string): ToolRouteDecision {
     p.includes('objective') ||
     p.includes('strategy') ||
     p.includes('how to') ||
+    p.includes('achieve') ||
+    p.includes('target') ||
+    p.includes('budget') ||
+    p.includes('feasible') ||
+    p.includes('possible') ||
+    p.includes('time limit') ||
+    p.includes('month') ||
+    p.includes('week') ||
+    p.includes('day') ||
     p.includes('আয়') ||
     p.includes('উপার্জন') ||
     p.includes('পরিকল্পনা') ||
     p.includes('সার্চ') ||
+    p.includes('অর্জনের') ||
     /\b(search|find|news|weather|sports|google)\b/i.test(p);
 
   if (isGoalOrPlan) {

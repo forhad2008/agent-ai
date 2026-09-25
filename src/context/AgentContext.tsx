@@ -392,6 +392,7 @@ export const AgentProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       autoApproveResearch: true,
       dataRetentionDays: 30,
       aiStatus: 'active',
+      systemPersona: 'executive-assistant',
       crewAiEnabled: true,
       crewAiUrl: 'https://content-writing-crew-v1-b01bd292-f1d6-48e5--55d0aedd.crewai.com',
       crewAiToken: 'd29f6c0b7fee',

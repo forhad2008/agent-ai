@@ -326,6 +326,18 @@ export const SettingsView: React.FC = () => {
             </div>
 
             <div>
+              <label className="block text-[#94A3B8] font-medium mb-1">System Persona Mode</label>
+              <select
+                value={formData.systemPersona || 'executive-assistant'}
+                onChange={(e) => setFormData({ ...formData, systemPersona: e.target.value as any })}
+                className="w-full rounded-xl bg-[#080817] px-3.5 py-2.5 text-[#F8FAFC] border border-[rgba(139,92,246,0.25)] focus:outline-none focus:border-[#A855F7]"
+              >
+                <option value="executive-assistant">🛡️ Executive Assistant (Pro-active, Loyal, Analytical)</option>
+                <option value="standard">🤖 Standard AI Assistant (Conversational, Standard)</option>
+              </select>
+            </div>
+
+            <div className="sm:col-span-2">
               <label className="block text-[#94A3B8] font-medium mb-1">Authorized User</label>
               <input
                 type="text"

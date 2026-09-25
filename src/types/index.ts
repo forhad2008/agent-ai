@@ -145,6 +145,7 @@ export interface SettingsState {
   autoApproveResearch: boolean;
   dataRetentionDays: number;
   aiStatus: 'active' | 'busy' | 'idle';
+  systemPersona?: 'executive-assistant' | 'standard';
   crewAiEnabled?: boolean;
   crewAiUrl?: string;
   crewAiToken?: string;
