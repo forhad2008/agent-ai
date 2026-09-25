@@ -41,7 +41,8 @@ export type ActiveView =
   | 'tools'
   | 'ailab'
   | 'plan'
-  | 'profile';
+  | 'profile'
+  | 'guide';
 
 interface AgentContextType {
   activeView: ActiveView;

@@ -18,6 +18,7 @@ import {
   CheckCircle2,
   User,
   Workflow,
+  Compass,
 } from 'lucide-react';
 import { useAgent, ActiveView } from '../../context/AgentContext';
 
@@ -103,6 +104,11 @@ export const Sidebar: React.FC = () => {
       id: 'settings',
       label: 'Settings',
       icon: Settings,
+    },
+    {
+      id: 'guide',
+      label: 'Agent Map',
+      icon: Compass,
     },
   ];
 

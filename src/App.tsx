@@ -14,6 +14,7 @@ import { PlanView } from './components/activity/PlanView';
 import { SettingsView } from './components/settings/SettingsView';
 import { UserProfileView } from './components/profile/UserProfileView';
 import { AILabView } from './components/ailab/AILabView';
+import { AgentMapGuideView } from './components/guide/AgentMapGuideView';
 import { LanguageModeModal } from './components/common/LanguageModeModal';
 import { InstallGuideModal } from './components/common/InstallGuideModal';
 
@@ -50,6 +51,8 @@ const MainLayout: React.FC = () => {
         return <ToolsView />;
       case 'settings':
         return <SettingsView />;
+      case 'guide':
+        return <AgentMapGuideView />;
       default:
         return <DashboardView />;
     }
