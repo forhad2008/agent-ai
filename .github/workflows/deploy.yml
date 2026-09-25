@@ -1,0 +1,44 @@
+name: Work OS CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ১. রিপোজিটরি ক্লোন করা
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # ২. নোড ডট জেএস পরিবেশ প্রস্তুত করা
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # ৩. ডিপেন্ডেন্সি ইনস্টল করা
+      - name: Install Dependencies
+        run: npm ci
+
+      # ৪. কোড কোয়ালিটি ও সিনট্যাক্স স্ক্যান (Lint Check)
+      - name: Run Linter Checks
+        run: npm run lint || true
+
+      # ৫. অ্যাপ্লিকেশন প্রোডাকশন বিল্ড তৈরি করা (Vite/Next compiler)
+      - name: Build Application
+        run: npm run build
+
+      # ৬. বিল্ড করা ফাইলগুলো আর্টিফ্যাক্ট হিসেবে সেভ করা (ঐচ্ছিক)
+      - name: Upload Build Artifacts
+        uses: actions/artifacts/upload@v4
+        with:
+          name: dist-artifacts
+          path: dist/
