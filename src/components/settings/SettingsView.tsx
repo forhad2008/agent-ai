@@ -24,11 +24,11 @@ import {
 import { useAgent } from '../../context/AgentContext';
 import { TECH_LANGUAGES, getLanguage } from '../../data/languages';
 import {
-  signInWithGoogle,
-  signOutGoogle,
-  getGoogleAccessToken,
-  getCurrentUser,
-} from '../../services/googleAuth';
+  loginWithGoogleOAuth,
+  logoutGoogleOAuth,
+  getSavedGoogleAccessToken,
+  getSavedGoogleUser,
+} from '../../services/googleOAuthFlow';
 
 export const SettingsView: React.FC = () => {
   const {
@@ -53,9 +53,9 @@ export const SettingsView: React.FC = () => {
 
   useEffect(() => {
     // Check if user is already logged in on mount
-    const loadGoogleStatus = async () => {
-      const token = await getGoogleAccessToken();
-      const user = getCurrentUser();
+    const loadGoogleStatus = () => {
+      const token = getSavedGoogleAccessToken();
+      const user = getSavedGoogleUser();
       if (token && user) {
         setGoogleToken(token);
         setGoogleUser(user);
@@ -67,7 +67,7 @@ export const SettingsView: React.FC = () => {
   const handleGoogleConnect = async () => {
     setIsLoggingIn(true);
     try {
-      const result = await signInWithGoogle();
+      const result = await loginWithGoogleOAuth();
       if (result) {
         setGoogleUser(result.user);
         setGoogleToken(result.accessToken);
@@ -79,9 +79,9 @@ export const SettingsView: React.FC = () => {
     }
   };
 
-  const handleGoogleDisconnect = async () => {
+  const handleGoogleDisconnect = () => {
     try {
-      await signOutGoogle();
+      logoutGoogleOAuth();
       setGoogleUser(null);
       setGoogleToken(null);
     } catch (err) {
