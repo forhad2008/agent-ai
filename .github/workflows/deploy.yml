@@ -1,44 +1,57 @@
-name: Work OS CI/CD Pipeline
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
-      - main
-  pull_request:
-    branches:
-      - main
+      - main  # main ব্রাঞ্চে পুশ করার সাথে সাথে অটো-ডেপ্লয় হবে
+
+# গিটহাব পেজে ডেপ্লয় করার প্রয়োজনীয় পারমিশন সেট করা
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
-  build-and-test:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-
     steps:
-      # ১. রিপোজিটরি ক্লোন করা
-      - name: Checkout Repository
+      # ১. কোড রিপোজিটরি ক্লোন করা
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      # ২. নোড ডট জেএস পরিবেশ প্রস্তুত করা
-      - name: Setup Node.js
+      # ২. নোড ডট জেএস সেটআপ
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
 
-      # ৩. ডিপেন্ডেন্সি ইনস্টল করা (সর্বাধিক নির্ভরযোগ্য উপায়ে)
+      # ৩. ডিপেন্ডেন্সি ইনস্টল করা
       - name: Install Dependencies
         run: npm install
 
-      # ৪. কোড কোয়ালিটি ও সিনট্যাক্স স্ক্যান (Lint Check)
-      - name: Run Linter Checks
-        run: npm run lint || true
-
-      # ৫. অ্যাপ্লিকেশন প্রোডাকশন বিল্ড তৈরি করা
-      - name: Build Application
+      # ৪. অ্যাপ্লিকেশন বিল্ড করা
+      - name: Build Web Application
         run: npm run build
 
-      # ৬. বিল্ড করা ফাইলগুলো সফলভাবে আর্টিফ্যাক্ট হিসেবে সেভ করা
-      - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v4 # টাইপো ফিক্স করা হয়েছে
+      # ৫. গিটহাব পেজ কনফিগারেশন সেটআপ করা
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      # ৬. বিল্ড ডিরেক্টরিকে আর্টিফ্যাক্ট হিসেবে প্যাক করা
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: dist-artifacts
-          path: dist/
+          path: './dist' # আপনার বিল্ড করা মেইন ফোল্ডার
+
+      # ৭. গিটহাব পেজে সাইটটি সরাসরি লাইভ ডেপ্লয় করা
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
