@@ -562,7 +562,11 @@ Transform your daily operations with a goal-driven AI assistant designed to exec
   }
 
   // 5.5 Planning & Income Strategy (100$ in 1 Month)
-  if (p.includes('plan') || p.includes('earn') || p.includes('income') || p.includes('dollar') || p.includes('money') || p.includes('আয়') || p.includes('উপার্জন') || p.includes('পরিকল্পনা')) {
+  const isOneHundredPlanQuery = 
+    (p.includes('100') || p.includes('১০০')) && 
+    (p.includes('plan') || p.includes('earn') || p.includes('income') || p.includes('dollar') || p.includes('money') || p.includes('আয়') || p.includes('উপার্জন') || p.includes('পরিকল্পনা'));
+
+  if (isOneHundredPlanQuery) {
     return {
       thinking: isBangla
         ? `ব্যবহারকারী আব্দুল্লাহ ১ মাসে ১০০ ডলার উপার্জনের পরিকল্পনা চেয়েছে। এটি সম্পূর্ণ নিরাপদ অফলাইন লজিক, ফাইল ডিক্ল্যারেশন বা ড্যাশবোর্ড প্ল্যানের সাথে সামঞ্জস্যপূর্ণ।`
