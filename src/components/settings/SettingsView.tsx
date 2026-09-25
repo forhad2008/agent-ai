@@ -39,7 +39,16 @@ export const SettingsView: React.FC = () => {
     t,
   } = useAgent();
 
-  const [formData, setFormData] = useState({ ...settings });
+  const [formData, setFormData] = useState({
+    ...settings,
+    executivePersona: settings.executivePersona || {
+      enabled: true,
+      formalTone: true,
+      requireThinking: true,
+      documentSearch: true,
+      actionPlanRequired: true,
+    }
+  });
   const [saveSuccess, setSaveSuccess] = useState(false);
 
   const [googleUser, setGoogleUser] = useState<any>(null);
@@ -346,6 +355,144 @@ export const SettingsView: React.FC = () => {
                 className="w-full rounded-xl bg-[#080817]/60 px-3.5 py-2.5 text-[#94A3B8] border border-[rgba(139,92,246,0.2)] cursor-not-allowed"
               />
             </div>
+          </div>
+        </div>
+
+        {/* Executive Persona Deep Configuration */}
+        <div className="rounded-2xl bg-[#0D0D20] p-4 sm:p-6 border border-[rgba(139,92,246,0.25)] space-y-4 shadow-xl">
+          <div className="flex items-center justify-between border-b border-[rgba(139,92,246,0.2)] pb-3">
+            <h2 className="text-sm font-bold text-[#F8FAFC] uppercase tracking-wider flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-[#A855F7]" />
+              <span>Executive Persona & Alignment Config</span>
+            </h2>
+            <label className="relative inline-flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                checked={formData.executivePersona?.enabled ?? true}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    executivePersona: {
+                      ...(formData.executivePersona || {
+                        enabled: true,
+                        formalTone: true,
+                        requireThinking: true,
+                        documentSearch: true,
+                        actionPlanRequired: true,
+                      }),
+                      enabled: e.target.checked,
+                    },
+                  })
+                }
+                className="sr-only peer"
+              />
+              <div className="w-9 h-5 bg-[#080817] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-[#94A3B8] peer-checked:after:bg-[#A855F7] after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#7C3AED]/30 border border-purple-500/20"></div>
+              <span className="ml-2 text-[10px] font-bold text-[#94A3B8] uppercase">
+                {formData.executivePersona?.enabled ? 'Active' : 'Disabled'}
+              </span>
+            </label>
+          </div>
+
+          <p className="text-[11px] text-[#94A3B8] leading-relaxed">
+            Configure behavior patterns for the **Executive Persona Protocol**. When enabled, these strict directives shape the prompt templates sent to the Gemini API, ensuring elite, high-respect, and analytical boss-assistant communication.
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+            <label className="flex items-center justify-between p-3 rounded-xl bg-[#080817] border border-[rgba(139,92,246,0.18)] cursor-pointer">
+              <div>
+                <span className="font-semibold text-[#F8FAFC] block text-xs">Enforce Formal Tone</span>
+                <span className="text-[10px] text-[#94A3B8] block mt-0.5">
+                  Always address user as "Boss" / "Sir" with professional devotion.
+                </span>
+              </div>
+              <input
+                type="checkbox"
+                checked={formData.executivePersona?.formalTone ?? true}
+                disabled={!formData.executivePersona?.enabled}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    executivePersona: {
+                      ...formData.executivePersona!,
+                      formalTone: e.target.checked,
+                    },
+                  })
+                }
+                className="h-3.5 w-3.5 rounded accent-[#7C3AED] shrink-0 ml-2 disabled:opacity-50"
+              />
+            </label>
+
+            <label className="flex items-center justify-between p-3 rounded-xl bg-[#080817] border border-[rgba(139,92,246,0.18)] cursor-pointer">
+              <div>
+                <span className="font-semibold text-[#F8FAFC] block text-xs">Require Analytical Thinking</span>
+                <span className="text-[10px] text-[#94A3B8] block mt-0.5">
+                  Enforce structured &lt;thinking&gt; steps before responding in chat.
+                </span>
+              </div>
+              <input
+                type="checkbox"
+                checked={formData.executivePersona?.requireThinking ?? true}
+                disabled={!formData.executivePersona?.enabled}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    executivePersona: {
+                      ...formData.executivePersona!,
+                      requireThinking: e.target.checked,
+                    },
+                  })
+                }
+                className="h-3.5 w-3.5 rounded accent-[#7C3AED] shrink-0 ml-2 disabled:opacity-50"
+              />
+            </label>
+
+            <label className="flex items-center justify-between p-3 rounded-xl bg-[#080817] border border-[rgba(139,92,246,0.18)] cursor-pointer">
+              <div>
+                <span className="font-semibold text-[#F8FAFC] block text-xs">Document Search Findings</span>
+                <span className="text-[10px] text-[#94A3B8] block mt-0.5">
+                  Mandatory log of factual search inputs, sources, and parameters.
+                </span>
+              </div>
+              <input
+                type="checkbox"
+                checked={formData.executivePersona?.documentSearch ?? true}
+                disabled={!formData.executivePersona?.enabled}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    executivePersona: {
+                      ...formData.executivePersona!,
+                      documentSearch: e.target.checked,
+                    },
+                  })
+                }
+                className="h-3.5 w-3.5 rounded accent-[#7C3AED] shrink-0 ml-2 disabled:opacity-50"
+              />
+            </label>
+
+            <label className="flex items-center justify-between p-3 rounded-xl bg-[#080817] border border-[rgba(139,92,246,0.18)] cursor-pointer">
+              <div>
+                <span className="font-semibold text-[#F8FAFC] block text-xs">Require Final Action Plan</span>
+                <span className="text-[10px] text-[#94A3B8] block mt-0.5">
+                  Conclude responses with a structured strategic roadmap and next steps.
+                </span>
+              </div>
+              <input
+                type="checkbox"
+                checked={formData.executivePersona?.actionPlanRequired ?? true}
+                disabled={!formData.executivePersona?.enabled}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    executivePersona: {
+                      ...formData.executivePersona!,
+                      actionPlanRequired: e.target.checked,
+                    },
+                  })
+                }
+                className="h-3.5 w-3.5 rounded accent-[#7C3AED] shrink-0 ml-2 disabled:opacity-50"
+              />
+            </label>
           </div>
         </div>
 

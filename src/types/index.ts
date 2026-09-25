@@ -130,6 +130,14 @@ export interface UserProfile {
   profileImage?: string;
 }
 
+export interface ExecutivePersonaConfig {
+  enabled: boolean;
+  formalTone: boolean;
+  requireThinking: boolean;
+  documentSearch: boolean;
+  actionPlanRequired: boolean;
+}
+
 export interface SettingsState {
   agentName: string;
   language: string;
@@ -146,6 +154,7 @@ export interface SettingsState {
   dataRetentionDays: number;
   aiStatus: 'active' | 'busy' | 'idle';
   systemPersona?: 'executive-assistant' | 'standard';
+  executivePersona?: ExecutivePersonaConfig;
   crewAiEnabled?: boolean;
   crewAiUrl?: string;
   crewAiToken?: string;

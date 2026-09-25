@@ -393,6 +393,13 @@ export const AgentProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       dataRetentionDays: 30,
       aiStatus: 'active',
       systemPersona: 'executive-assistant',
+      executivePersona: {
+        enabled: true,
+        formalTone: true,
+        requireThinking: true,
+        documentSearch: true,
+        actionPlanRequired: true,
+      },
       crewAiEnabled: true,
       crewAiUrl: 'https://content-writing-crew-v1-b01bd292-f1d6-48e5--55d0aedd.crewai.com',
       crewAiToken: 'd29f6c0b7fee',
@@ -401,7 +408,15 @@ export const AgentProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     try {
       const saved = localStorage.getItem('abdullah_settings');
       if (saved) {
-        return { ...defaultSettings, ...JSON.parse(saved) };
+        const parsed = JSON.parse(saved);
+        return {
+          ...defaultSettings,
+          ...parsed,
+          executivePersona: {
+            ...defaultSettings.executivePersona,
+            ...(parsed.executivePersona || {})
+          }
+        };
       }
     } catch (e) {}
     return defaultSettings;
