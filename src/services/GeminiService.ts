@@ -1,38 +1,18 @@
 import { sendAgentMessage, ChatResponse } from './api';
-import { performWebSearch } from '../utils/webSearch';
+import { executeRoutedClassification, classifyUserInput } from '../utils/toolRouter';
 import { MessageItem, UserProfile } from '../types';
 
 export const GeminiService = {
   /**
-   * Evaluates if a prompt is a goal-oriented prompt requiring real-time web insights.
+   * Evaluates if a prompt is a goal-oriented prompt requiring real-time web insights using classifyUserInput.
    */
   isGoalOrientedPrompt(prompt: string): boolean {
-    const p = prompt.toLowerCase();
-    return (
-      p.includes('plan') ||
-      p.includes('earn') ||
-      p.includes('income') ||
-      p.includes('dollar') ||
-      p.includes('money') ||
-      p.includes('research') ||
-      p.includes('trend') ||
-      p.includes('market') ||
-      p.includes('latest') ||
-      p.includes('price') ||
-      p.includes('competitor') ||
-      p.includes('goal') ||
-      p.includes('objective') ||
-      p.includes('business') ||
-      p.includes('strategy') ||
-      p.includes('আয়') ||
-      p.includes('উপার্জন') ||
-      p.includes('পরিকল্পনা') ||
-      p.includes('সার্চ')
-    );
+    const decision = classifyUserInput(prompt);
+    return decision.category === 'WEB_SEARCH';
   },
 
   /**
-   * Tool Router that detects real-time requirements, executes the webSearch utility,
+   * Tool Router that detects real-time requirements, executes the webSearch utility via unified toolRouter,
    * and routes the enriched prompt with search summary context to the agent.
    */
   async processAgentMessageWithRouting(
@@ -49,15 +29,16 @@ export const GeminiService = {
     let enrichedPrompt = prompt;
     let executedSearchRecord: any = null;
 
-    if (this.isGoalOrientedPrompt(prompt)) {
+    // Execute routing via toolRouter logic layer
+    const routingResult = await executeRoutedClassification(prompt);
+
+    if (routingResult.decision.category === 'WEB_SEARCH' && routingResult.searchResult) {
       if (onSearchStart) onSearchStart();
       
-      console.log(`Tool Router: Goal-oriented prompt detected. Prioritizing & routing to webSearch utility for: "${prompt}"`);
-      const searchResult = await performWebSearch(prompt);
+      const searchResult = routingResult.searchResult;
       
       if (searchResult.success && searchResult.summary) {
-        // Enrich prompt with direct real-time Google search context
-        enrichedPrompt = `${prompt}\n\n[EXTERNAL LIVE WEB SEARCH DATA - PRIORITIZED BY TOOL ROUTER]\nHere is the latest live Google Search data retrieved for this request:\n${searchResult.summary}`;
+        enrichedPrompt = routingResult.enrichedPrompt;
         
         if (onSearchComplete) {
           onSearchComplete(searchResult.summary, searchResult.query, searchResult.sources || []);
@@ -68,7 +49,7 @@ export const GeminiService = {
           toolName: "Google Live Search Grounding",
           category: "WEB_TOOLS",
           status: "success",
-          description: `Tool Router successfully routed and prioritized webSearch utility. Summary length: ${searchResult.summary.length} characters.`,
+          description: `Tool Router classified as WEB_SEARCH, executed Google search and prioritized grounding. Summary length: ${searchResult.summary.length} characters.`,
           timestamp: new Date().toLocaleTimeString()
         };
       }
