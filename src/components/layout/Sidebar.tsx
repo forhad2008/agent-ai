@@ -17,6 +17,7 @@ import {
   X,
   CheckCircle2,
   User,
+  Workflow,
 } from 'lucide-react';
 import { useAgent, ActiveView } from '../../context/AgentContext';
 
@@ -72,6 +73,11 @@ export const Sidebar: React.FC = () => {
       id: 'activity',
       label: 'Activity',
       icon: Activity,
+    },
+    {
+      id: 'plan',
+      label: 'Agent Plan',
+      icon: Workflow,
     },
     {
       id: 'results',

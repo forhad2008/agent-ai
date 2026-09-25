@@ -10,6 +10,7 @@ import { FilesView } from './components/files/FilesView';
 import { ToolsView } from './components/tools/ToolsView';
 import { ApprovalsView } from './components/approvals/ApprovalsView';
 import { ActivityView } from './components/activity/ActivityView';
+import { PlanView } from './components/activity/PlanView';
 import { SettingsView } from './components/settings/SettingsView';
 import { UserProfileView } from './components/profile/UserProfileView';
 import { AILabView } from './components/ailab/AILabView';
@@ -39,6 +40,8 @@ const MainLayout: React.FC = () => {
         return <ApprovalsView />;
       case 'activity':
         return <ActivityView />;
+      case 'plan':
+        return <PlanView />;
       case 'results':
         return <TasksView />;
       case 'automations':
