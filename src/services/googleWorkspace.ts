@@ -172,3 +172,27 @@ export async function fetchUserGmailWithAuthService(maxResults = 5): Promise<Gma
   return fetchRecentEmails(token, maxResults);
 }
 
+/**
+ * Fetches the user's upcoming Google Calendar events automatically retrieving
+ * the authorized token from the GoogleAuthService securely.
+ */
+export async function fetchUserCalendarWithAuthService(maxResults = 10): Promise<CalendarEvent[]> {
+  const token = GoogleAuthService.getAccessToken();
+  if (!token) {
+    throw new Error('No active Google OAuth access token found. Please sign in via Settings.');
+  }
+  return fetchUpcomingEvents(token, maxResults);
+}
+
+/**
+ * Fetches the user's Google Drive files metadata automatically retrieving
+ * the authorized token from the GoogleAuthService securely.
+ */
+export async function fetchUserDriveWithAuthService(q = '', maxResults = 15): Promise<DriveFileMetadata[]> {
+  const token = GoogleAuthService.getAccessToken();
+  if (!token) {
+    throw new Error('No active Google OAuth access token found. Please sign in via Settings.');
+  }
+  return fetchDriveFilesMetadata(token, q, maxResults);
+}
+
