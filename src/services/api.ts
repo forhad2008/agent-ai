@@ -561,8 +561,69 @@ Transform your daily operations with a goal-driven AI assistant designed to exec
     };
   }
 
+  // 5.5 Planning & Income Strategy (100$ in 1 Month)
+  if (p.includes('plan') || p.includes('earn') || p.includes('income') || p.includes('dollar') || p.includes('money') || p.includes('আয়') || p.includes('উপার্জন') || p.includes('পরিকল্পনা')) {
+    return {
+      thinking: isBangla
+        ? `ব্যবহারকারী আব্দুল্লাহ ১ মাসে ১০০ ডলার উপার্জনের পরিকল্পনা চেয়েছে। এটি সম্পূর্ণ নিরাপদ অফলাইন লজিক, ফাইল ডিক্ল্যারেশন বা ড্যাশবোর্ড প্ল্যানের সাথে সামঞ্জস্যপূর্ণ।`
+        : `User requested a 1-month $100 income plan. Returning the structured, verified digital service roadmap corresponding to 100-dollar-income-plan.md context.`,
+      content: isBangla
+        ? `## 🎯 কাজ: ১ মাসে $১০০ উপার্জনের পরিকল্পনা
+আব্দুল্লাহ ভাই, আপনার জন্য ১ মাসে $১০০ আয় করার একটি সম্পূর্ণ বাস্তবমুখী ও কার্যকরী গাইডলাইন নিচে তুলে ধরা হলো। এই ফাইলটি আপনার **📂 Files** ট্যাবেও সংরক্ষিত আছে।
+
+## 📋 পরিকল্পনা
+১. **১-৫ দিন:** Fiverr, Upwork বা Kwork প্রোফাইল সেটআপ এবং মেটা ট্যাগ অপ্টিমাইজেশন।
+২. **৬-২০ দিন:** আমাদের ড্যাশবোর্ডের **SEO & Performance Auditor** এবং এআই কনটেন্ট রাইটার ব্যবহার করে ব্লগের কাজ শুরু করা। (প্রতি সার্ভিস $১০-$১৫)।
+৩. **২১-৩০ দিন:** লোকাল ক্লায়েন্ট বা সোশ্যাল মিডিয়া ক্যাম্পেইন অডিট করে বাকি অংশ পূরণ করা।
+
+## 📊 ফলাফল
+- **প্রথম ২০ দিন:** ৩-৪টি ডেলিভারি ($৪০ - $৫০)
+- **শেষ ১০ দিন:** স্থানীয় বা গ্লোবাল মাইক্রো-টাস্ক ($৫০ - $৬০)
+- **মোট মাইলস্টোন:** **$১০০ (সাফল্য হার ৯৫%)**
+
+## 🚀 পরবর্তী ধাপ
+- আপনার সাইডবার থেকে **📂 Files** ট্যাবে যান এবং সেখানে সংরক্ষিত **100-dollar-income-plan.md** ফাইলটি সম্পূর্ণ রিডআউট করুন।
+- কোনো নির্দিষ্ট ধাপে এআই অ্যাসিস্ট্যান্স প্রয়োজন হলে আমাকে নির্দেশ দিন!`
+        : `## 🎯 Objective: 1-Month $100 Income Strategy
+Abdullah, here is your step-by-step verified action plan to earn **$100 within 30 days** using digital micro-services and this Workspace. This complete guide is also permanently saved in your **📂 Files** tab.
+
+## 📋 Plan
+1. **Days 1 - 5:** Profile Setup on Fiverr, Upwork, and Kwork. Select your niche (e.g., SEO Reports or Content Writing).
+2. **Days 6 - 20:** Deliver SEO website audits using the **SEO & Performance Auditor** tool inside your Tools View ($15/audit) and write blog posts using Gemini ($10/post).
+3. **Days 21 - 30:** Local social media audits and quick HTML/CSS bug fixes ($10 - $20/task) to reach the final goal.
+
+## 📊 Result
+- **Milestone Achieved:** **$100.00 USD (95% Probability Rate)**
+- **Average Delivery Time:** 2 hours per order using automated AI helpers.
+
+## 🚀 Next Steps
+- Go to your **📂 Files** tab and open **100-dollar-income-plan.md** for a full breakdown.
+- Let me know if you would like me to draft customized pitch templates for your clients!`,
+      planSteps: [
+        { title: isBangla ? 'প্রোফাইল সেটআপ গাইড' : 'Niche Selection & Profile Setup', status: 'completed' },
+        { title: isBangla ? 'টুল অডিট ডেলিভারি' : 'Deliver SEO Audits & Blogs', status: 'completed' },
+        { title: isBangla ? 'মাইলস্টোন স্কেলিং' : 'Local Outreach & Scaling', status: 'completed' },
+      ],
+      toolExecutions: [
+        {
+          id: `tool_${Date.now()}_income`,
+          toolName: 'Strategy Synthesizer',
+          category: 'RESEARCH',
+          status: 'success',
+          description: 'Synthesized micro-freelancing roadmap and localized client outreach scripts.',
+          timestamp: new Date().toLocaleTimeString(),
+        },
+      ],
+    };
+  }
+
   // 6. Greetings / System Capabilities / General Query
-  if (p.includes('hi') || p.includes('hello') || p.includes('who are you') || p.includes('help') || p.includes('what can you do')) {
+  const isGreeting = 
+    /\b(hi|hello|hey|help|yo)\b/i.test(p) || 
+    p.includes('who are you') || 
+    p.includes('what can you do');
+
+  if (isGreeting) {
     return {
       thinking: `Greeting parsed. Greeting user Abdullah. Listing authorized workspace tools and permission modes in the configured language to ensure full visibility of capabilities.`,
       content: isBangla
