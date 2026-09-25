@@ -21,6 +21,7 @@ import {
   INITIAL_MESSAGES,
 } from '../data/initialData';
 import { sendAgentMessage, executeToolApi, checkServerHealth } from '../services/api';
+import { GeminiService } from '../services/GeminiService';
 import { performWebSearch } from '../utils/webSearch';
 import { sound } from '../services/sound';
 import { TECH_LANGUAGES, TechLanguage, getLanguage, getInitialLanguage, DEFAULT_LANGUAGE_ID } from '../data/languages';
@@ -606,14 +607,36 @@ export const AgentProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
 
     try {
-      // 1. Fetch backend response first (to avoid UI lag during delays)
-      const agentResponse = await sendAgentMessage(
+      // 1. Fetch backend response first using prioritized Tool Router
+      const agentResponse = await GeminiService.processAgentMessageWithRouting(
         text,
         messages,
         settings.language,
         attachedList,
         userProfile,
-        settings
+        settings,
+        () => {
+          addActivity(
+            'Tool Router Activated',
+            'AI Work Orchestrator',
+            `Prioritized and executing webSearch utility for: "${text.slice(0, 30)}..."`,
+            'pending'
+          );
+          setActivePlan([
+            { title: t.planUnderstanding || "Analyzing objectives & requirements", status: 'completed' as const },
+            { title: t.planScanning || "Scanning workspace files & context", status: 'completed' as const },
+            { title: t.planExecuting || "Executing specialized tools & APIs", status: 'running' as const },
+            { title: t.planVerifying || "Verifying outcomes & formatting report", status: 'pending' as const },
+          ]);
+        },
+        (summary, query, sources) => {
+          addActivity(
+            'Google Live Search Grounding',
+            'WEB_TOOLS',
+            `Successfully retrieved and synthesized live Google data for: "${query}"`,
+            'success'
+          );
+        }
       );
 
       // 2. Play beautiful reasoning loop transitions
