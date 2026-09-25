@@ -4,6 +4,8 @@
  * using the authorized OAuth 2.0 access token.
  */
 
+import { GoogleAuthService } from './GoogleAuthService';
+
 export interface GmailMessage {
   id: string;
   threadId: string;
@@ -157,3 +159,16 @@ export async function fetchDriveFilesMetadata(accessToken: string, q = '', maxRe
     throw error;
   }
 }
+
+/**
+ * Fetches and parses the user's latest Gmail messages automatically retrieving
+ * the authorized token from the GoogleAuthService securely.
+ */
+export async function fetchUserGmailWithAuthService(maxResults = 5): Promise<GmailMessage[]> {
+  const token = GoogleAuthService.getAccessToken();
+  if (!token) {
+    throw new Error('No active Google OAuth access token found. Please sign in via Settings.');
+  }
+  return fetchRecentEmails(token, maxResults);
+}
+

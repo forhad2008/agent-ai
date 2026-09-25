@@ -1,0 +1,298 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-main: #02011a;
+    --bg-secondary: rgba(26, 2, 103, 0.55);
+    --bg-card: rgba(28, 4, 114, 0.40);
+    --border-purple: rgba(126, 23, 248, 0.3);
+    --primary-blue: #2563EB;
+    --primary-purple: #7E17F8;
+    --bright-purple: #8117F9;
+    --light-purple: #C084FC;
+    --indigo: #4516C2;
+    --deep-purple: #1A0267;
+    --text-primary: #F8FAFC;
+    --text-secondary: #94A3B8;
+    --success-cyan: #00F5D4;
+    --warning: #F59E0B;
+    --danger: #EF4444;
+  }
+
+  body {
+    background-color: #02011a;
+    color: #F8FAFC;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+}
+
+/* Custom sleek dark scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(37, 99, 235, 0.5), rgba(126, 23, 248, 0.5));
+  border-radius: 9999px;
+  backdrop-filter: blur(8px);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(59, 130, 246, 0.8), rgba(129, 23, 249, 0.8));
+}
+
+/* 100% Truly Transparent Light Blur Glass with Purple & Blue Gradient Border */
+.glass-panel,
+.glass-container,
+.liquid-glass,
+.blue-purple-glass-panel,
+.glass-card,
+.glass-box,
+.blue-purple-glass-card,
+.transparent-light-glass {
+  position: relative;
+  background: rgba(10, 6, 28, 0.28) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1.5px solid transparent;
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.15),
+    0 0 15px rgba(126, 23, 248, 0.15);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel::before,
+.glass-container::before,
+.liquid-glass::before,
+.blue-purple-glass-panel::before,
+.glass-card::before,
+.glass-box::before,
+.blue-purple-glass-card::before,
+.transparent-light-glass::before {
+  content: "";
+  position: absolute;
+  inset: -1.5px;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(135deg, #3B82F6 0%, #7E17F8 50%, #C084FC 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glass-card-hover:hover,
+.blue-purple-glass-card:hover,
+.transparent-light-glass:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 12px 30px rgba(37, 99, 235, 0.22),
+    0 0 25px rgba(126, 23, 248, 0.30);
+}
+
+.glass-card-hover:hover::before,
+.blue-purple-glass-card:hover::before,
+.transparent-light-glass:hover::before {
+  background: linear-gradient(135deg, #60A5FA 0%, #A855F7 50%, #E879F9 100%);
+}
+
+.glass-input {
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.06)),
+    linear-gradient(135deg, rgba(59, 130, 246, 0.8) 0%, rgba(126, 23, 248, 0.8) 100%);
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  border: 1.5px solid transparent;
+  box-shadow: inset 0 1.5px 2px rgba(0, 0, 0, 0.45);
+  transition: all 0.2s ease;
+}
+
+.glass-input:focus {
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.10)),
+    linear-gradient(135deg, #3B82F6 0%, #9333EA 50%, #C084FC 100%);
+  box-shadow: 
+    inset 0 1px 2px rgba(0, 0, 0, 0.25),
+    0 0 25px rgba(37, 99, 235, 0.4),
+    0 0 25px rgba(126, 23, 248, 0.4);
+  outline: none;
+}
+
+/* Glass Interactive Secondary Buttons & Transparent Buttons */
+.glass-button {
+  background-image: 
+    linear-gradient(135deg, rgba(255, 255, 255, 0.16) 0%, rgba(37, 99, 235, 0.12) 50%, rgba(126, 23, 248, 0.12) 100%),
+    linear-gradient(135deg, #3B82F6 0%, #7E17F8 50%, #C084FC 100%);
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  backdrop-filter: blur(20px) saturate(200%);
+  -webkit-backdrop-filter: blur(20px) saturate(200%);
+  border: 1.5px solid transparent;
+  box-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(37, 99, 235, 0.25),
+    0 0 20px rgba(126, 23, 248, 0.28);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-button:hover {
+  background-image: 
+    linear-gradient(135deg, rgba(255, 255, 255, 0.28) 0%, rgba(59, 130, 246, 0.25) 50%, rgba(126, 23, 248, 0.25) 100%),
+    linear-gradient(135deg, #60A5FA 0%, #9333EA 50%, #F0ABFC 100%);
+  box-shadow: 
+    0 8px 25px rgba(37, 99, 235, 0.45),
+    0 0 30px rgba(126, 23, 248, 0.45);
+  transform: translateY(-1.5px);
+}
+
+.glass-btn-transparent {
+  background-image: 
+    linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.02) 40%, rgba(59, 130, 246, 0.10) 75%, rgba(126, 23, 248, 0.15) 100%),
+    linear-gradient(135deg, #3B82F6 0%, #7E17F8 50%, #C084FC 100%);
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  backdrop-filter: blur(28px) saturate(220%);
+  -webkit-backdrop-filter: blur(28px) saturate(220%);
+  border: 1.5px solid transparent;
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.40),
+    0 0 25px rgba(37, 99, 235, 0.22),
+    0 0 25px rgba(126, 23, 248, 0.28);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-btn-transparent:hover {
+  background-image: 
+    linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.04) 35%, rgba(59, 130, 246, 0.22) 70%, rgba(126, 23, 248, 0.30) 100%),
+    linear-gradient(135deg, #60A5FA 0%, #9333EA 50%, #F0ABFC 100%);
+  box-shadow: 
+    0 15px 35px rgba(37, 99, 235, 0.45),
+    0 0 35px rgba(126, 23, 248, 0.50);
+  transform: translateY(-1.5px);
+}
+
+/* Blue and Purple Liquid Gradient Glowing Primary Buttons */
+.btn-purple-glow,
+.btn-primary,
+.btn-gradient,
+.btn-blue-purple {
+  background-image: 
+    linear-gradient(135deg, #1D4ED8 0%, #2563EB 28%, #6366F1 55%, #7E17F8 82%, #9333EA 100%),
+    linear-gradient(135deg, #60A5FA 0%, #C084FC 50%, #F472B6 100%);
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  backdrop-filter: blur(22px) saturate(200%);
+  -webkit-backdrop-filter: blur(22px) saturate(200%);
+  border: 1.5px solid transparent;
+  box-shadow: 
+    0 10px 30px -4px rgba(37, 99, 235, 0.55),
+    0 0 28px rgba(126, 23, 248, 0.50);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-purple-glow:hover,
+.btn-primary:hover,
+.btn-gradient:hover,
+.btn-blue-purple:hover {
+  background-image: 
+    linear-gradient(135deg, #2563EB 0%, #3B82F6 28%, #818CF8 55%, #8117F9 82%, #C084FC 100%),
+    linear-gradient(135deg, #93C5FD 0%, #E879F9 50%, #F472B6 100%);
+  box-shadow: 
+    0 15px 40px -4px rgba(59, 130, 246, 0.75),
+    0 0 38px rgba(168, 85, 247, 0.75);
+  transform: translateY(-1.5px);
+}
+
+.btn-purple-glow:active,
+.btn-primary:active,
+.btn-gradient:active,
+.btn-blue-purple:active {
+  transform: translateY(0);
+}
+
+/* Subtle Pulse Glow for Agent Orb */
+@keyframes orbGlow {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.5)) drop-shadow(0 0 20px rgba(126, 23, 248, 0.5));
+  }
+  50% {
+    transform: scale(1.04);
+    filter: drop-shadow(0 0 25px rgba(59, 130, 246, 0.85)) drop-shadow(0 0 30px rgba(168, 85, 247, 0.85));
+  }
+}
+
+.animate-orb-glow {
+  animation: orbGlow 4s ease-in-out infinite;
+}
+
+/* Premium Up-Down Bright & Dark Breathing Glow Animation for Round Planet */
+@keyframes luxuryFloatPulse {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+    filter: brightness(0.85) drop-shadow(0 0 15px rgba(124, 58, 237, 0.2));
+    opacity: 0.85;
+  }
+  50% {
+    transform: translateY(-10px) scale(1.02);
+    filter: brightness(1.28) drop-shadow(0 0 45px rgba(192, 132, 252, 0.55));
+    opacity: 1;
+  }
+}
+
+.animate-luxury-pulse {
+  animation: luxuryFloatPulse 4.2s ease-in-out infinite;
+}
+
+/* ======================================================== */
+/* PREMIUM REFRACTIVE LIQUID GLASSMORPHISM STYLING CLASSES   */
+/* ======================================================== */
+.premium-liquid-glass {
+  position: relative;
+  /* Translucent sapphire blue & deep cosmic cobalt blend */
+  background: linear-gradient(135deg, rgba(14, 20, 56, 0.52) 0%, rgba(8, 6, 26, 0.48) 100%) !important;
+  backdrop-filter: blur(24px) saturate(240%) contrast(108%);
+  -webkit-backdrop-filter: blur(24px) saturate(240%) contrast(108%);
+  /* Vivid premium sapphire glass border */
+  border: 1px solid rgba(59, 130, 246, 0.22);
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    /* Rich neon sapphire blue glass glow */
+    0 0 25px rgba(37, 99, 235, 0.25),
+    0 0 15px rgba(0, 245, 212, 0.1);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.premium-liquid-glass::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 42%;
+  /* High gloss top specular light sheet */
+  background: linear-gradient(180deg, rgba(59, 130, 246, 0.15) 0%, rgba(255, 255, 255, 0.08) 30%, rgba(255, 255, 255, 0) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.premium-liquid-glass-hover:hover {
+  transform: translateY(-3.5px) scale(1.006);
+  background: linear-gradient(135deg, rgba(20, 30, 75, 0.62) 0%, rgba(12, 8, 38, 0.55) 100%) !important;
+  border-color: rgba(37, 99, 235, 0.45);
+  box-shadow: 
+    0 30px 60px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 35px rgba(59, 130, 246, 0.42),
+    0 0 20px rgba(0, 245, 212, 0.2);
+}
+

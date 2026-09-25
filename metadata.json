@@ -1,0 +1,8 @@
+{
+  "name": "Agent-alpha08",
+  "description": "Personal AI operating system and task execution agent powered by Gemini.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
