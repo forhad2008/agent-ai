@@ -610,32 +610,13 @@ app.post("/api/agent/chat", async (req, res) => {
     });
 
     const pLower = prompt.toLowerCase();
-    const needsSearch = 
-      pLower.includes("search") || 
-      pLower.includes("web") || 
-      pLower.includes("online") || 
-      pLower.includes("internet") || 
-      pLower.includes("google") || 
-      pLower.includes("plan") || 
-      pLower.includes("strategy") || 
-      pLower.includes("how to") || 
-      pLower.includes("guide") || 
-      pLower.includes("earn") || 
-      pLower.includes("income") || 
-      pLower.includes("dollar") || 
-      pLower.includes("money") || 
-      pLower.includes("market") || 
-      pLower.includes("latest") || 
-      pLower.includes("সার্চ") || 
-      pLower.includes("খুঁজো") || 
-      pLower.includes("খুঁজুন") || 
-      pLower.includes("ওয়েব") || 
-      pLower.includes("তথ্যাদি") || 
-      pLower.includes("প্ল্যান") || 
-      pLower.includes("পরিকল্পনা") ||
-      pLower.includes("আয়") ||
-      pLower.includes("উপার্জন") ||
-      pLower.includes("টাকা");
+    // Google Search is enabled by default for all queries to ensure the agent is always smart, grounded, and capable of retrieving live web insights autonomously for any topic (such as massage, news, or technology).
+    const isLocalCalculationOnly = 
+      pLower.includes("only compute") || 
+      pLower.includes("local calculations") || 
+      pLower.includes("do not search") ||
+      pLower.includes("no search");
+    const needsSearch = !isLocalCalculationOnly;
 
     const config: any = {
       systemInstruction: getSystemInstruction(language, userProfile),

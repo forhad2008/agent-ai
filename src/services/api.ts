@@ -650,7 +650,15 @@ How can I assist your workflow right now? Feel free to type any instruction!`,
   return {
     thinking: `Unrecognized custom instruction format. Initializing standard task compiler. Aligning request with system tools. Applying default low-risk safety rule. Completing successfully.`,
     content: isBangla
-      ? `## 🎯 কাজ সম্পন্ন হয়েছে\nআপনার বিশেষ নির্দেশনা: **"${prompt}"** বিশ্লেষণ করে ফলাফল তৈরি করা হয়েছে।\n\n## 📋 ফলাফলের সারাংশ\n১. **উদ্দেশ্য শনাক্তকরণ**: আপনার অনুরোধটি সঠিকভাবে মূল্যায়ন করা হয়েছে।\n২. **অটোমেটেড প্রসেসিং**: প্রয়োজনীয় ডেটা ও টুলস ফিল্টার করা হয়েছে।\n৩. **নিরাপত্তা নিরীক্ষা**: সফলভাবে কোনো ত্রুটি ছাড়াই কাজ শেষ হয়েছে।\n\nআপনার যদি আরও সাহায্য বা স্পষ্টীকরণের প্রয়োজন হয়, তাহলে নিচে নির্দ্বিধায় নতুন প্রশ্ন করতে পারেন!`
+      ? `## 🎯 কাজ সম্পন্ন হয়েছে
+আপনার বিশেষ নির্দেশনা: **"${prompt}"** বিশ্লেষণ করে ফলাফল তৈরি করা হয়েছে।
+
+## 📋 ফলাফলের সারাংশ
+১. **উদ্দেশ্য শনাক্তকরণ**: আপনার অনুরোধটি সঠিকভাবে মূল্যায়ন করা হয়েছে।
+২. **অটোমেটেড প্রসেসিং**: প্রয়োজনীয় ডেটা ও টুলস ফিল্টার করা হয়েছে।
+৩. **নিরাপত্তা নিরীক্ষা**: সফলভাবে কোনো ত্রুটি ছাড়াই কাজ শেষ হয়েছে।
+
+> 🌐 **নোট (রিয়েল-টাইম লাইভ সার্চ):** এই অফলাইন মোডে গুগল লাইভ সার্চ সিমুলেট করা হয়েছে। রিয়েল-টাইম লাইভ গুগল সার্চ গ্রাউন্ডিং সম্পূর্ণ সক্রিয় করতে অনুগ্রহ করে আমাদের ব্যাকএন্ড সমৃদ্ধ **[ডেভেলপমেন্ট লিংকটি]** ব্যবহার করুন যা সরাসরি জেমিনি এপিআই-এর সাথে লাইভ সংযুক্ত!`
       : `## 🎯 Work Order Executed
 **Processed your custom instruction:** "${prompt}"
 
@@ -659,17 +667,15 @@ How can I assist your workflow right now? Feel free to type any instruction!`,
 2. **Autonomous Tool Processing**: Deployed active worker sub-routines to synthesize and audit relevant parameters.
 3. **Output Quality Verification**: All outcomes verified cleanly with zero format errors or constraint violations.
 
-### Recommended Follow-up Actions
-- Ask follow-up questions to refine this task further.
-- Request an automated export or create a new task in your Tasks dashboard!`,
+> 🌐 **Note (Real-time Live Search):** In this client-side fallback mode, Google Live Search is simulated. To get real-time answers and fully utilize the **Gemini Google Search Grounding**, please use the full-stack **[Development App Link]** where the Node.js backend is active and directly connected to the GenAI SDK!`,
     planSteps: dynamicSteps,
     toolExecutions: [
       {
         id: `tool_${Date.now()}_default`,
-        toolName: 'AI Work Orchestrator Core',
-        category: 'SYSTEM',
+        toolName: 'Google Search Simulation',
+        category: 'WEB_TOOLS',
         status: 'success',
-        description: `Orchestrated sub-routines for "${prompt.slice(0, 30)}..."`,
+        description: `Simulated Google Search grounding for "${prompt.slice(0, 30)}..."`,
         timestamp: new Date().toLocaleTimeString(),
       },
     ],
